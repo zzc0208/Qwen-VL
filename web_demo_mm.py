@@ -16,8 +16,17 @@ import secrets
 import tempfile
 from transformers import AutoModelForCausalLM, AutoTokenizer
 from transformers.generation import GenerationConfig
+from modelscope import (
+    snapshot_download, AutoModelForCausalLM, AutoTokenizer, GenerationConfig
+)
+import torch
+model_id = 'qwen/Qwen-VL'
+revision = 'v1.0.3'
 
-DEFAULT_CKPT_PATH = 'Qwen/Qwen-VL-Chat'
+model_dir = snapshot_download(model_id, revision=revision)
+torch.manual_seed(1234)
+
+DEFAULT_CKPT_PATH = model_dir
 BOX_TAG_PATTERN = r"<box>([\s\S]*?)</box>"
 PUNCTUATION = "！？。＂＃＄％＆＇（）＊＋，－／：；＜＝＞＠［＼］＾＿｀｛｜｝～｟｠｢｣､、〃》「」『』【】〔〕〖〗〘〙〚〛〜〝〞〟〰〾〿–—‘’‛“”„‟…‧﹏."
 
